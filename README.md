@@ -2,7 +2,9 @@
 Proyecto en Ciencia de Datos
 
 
+## Project Structure
 
+```
 ├── data/
 │
 ├── models/
@@ -14,3 +16,4 @@ Proyecto en Ciencia de Datos
 ├── preprocessing.ipynb
 ├── results_analysis.ipynb
 └── training.ipynb
+```
