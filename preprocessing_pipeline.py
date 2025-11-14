@@ -18,7 +18,8 @@ def pipeline_features(df, linear= True, include_cpu=False, include_mem=False, gr
      - num_task_option: int, possible values 
      {0: do not include num_tasks, 1: use calculated num_tasks for NAs, 2: use calculated num_tasks for NAs and wrongly calculated entries}
 
-     Returns: df with the features needed for the model.
+     Returns: df with the features needed for the model. 
+     For targets, it includes (min, mean, max), not the original power_consumption list.
      """
   # Read the Marconi 100 data (job table)
   df = pd.read_parquet("job_table.parquet")
