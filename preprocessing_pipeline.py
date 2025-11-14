@@ -21,9 +21,7 @@ def pipeline_features(df, linear= True, include_cpu=False, include_mem=False, gr
      Returns: df with the features needed for the model. 
      For targets, it includes (min, mean, max), not the original power_consumption list.
      """
-  # Read the Marconi 100 data (job table)
-  df = pd.read_parquet("job_table.parquet")
-
+ 
   # Standard transformation over times to ensure they are formated properly.
   df["submit_time"]   = pd.to_datetime(df["submit_time"],   utc=True, errors="coerce")
 
