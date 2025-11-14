@@ -12,8 +12,8 @@ def pipeline_features(df, linear= True, include_cpu=False, include_mem=False, gr
      in order to return the df needed for the regression task.
      Arguments:
      - linear= True if the model to be applied is linear/NN regression. False if it is a tree model.
-     - include_cpu: True if we want to include cpu power consumption in the model. False otherwise.
-     - include_mem: True if we want to include mem power consumption in the model. False otherwise.
+     - include_cpu: True if we want to include cpu power consumption (min, mean, max) in the model. False otherwise.
+     - include_mem: True if we want to include mem power consumption (min, mean, max) in the model. False otherwise.
      - group_option: int, possible values {2: use main and others, 5: use all groups, 0: do not include group_id}
      - num_task_option: int, possible values 
      {0: do not include num_tasks, 1: use calculated num_tasks for NAs, 2: use calculated num_tasks for NAs and wrongly calculated entries}
