@@ -123,7 +123,7 @@ class ResNet(BaseNeuralNetwork):
 class AttentionMLP(BaseNeuralNetwork):
     
     def __init__(self, input_dim: int, hidden_dim: int = 128, 
-                 num_heads: int = 4, output_dim: int = 3, dropout: float = 0.2):
+                 num_heads: int = 6, output_dim: int = 3, dropout: float = 0.5):
         super().__init__(input_dim, output_dim)
         
         self.embedding = nn.Linear(input_dim, hidden_dim)
@@ -157,3 +157,8 @@ class AttentionMLP(BaseNeuralNetwork):
         x = self.mlp(attn_out)
         
         return self.output_layer(x)
+    
+
+
+
+# wandb agent iqbalch-universidad-carlos-iii-de-madrid/Test/70slosoh

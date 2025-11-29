@@ -13,6 +13,7 @@ import wandb
 from tqdm import tqdm
 
 
+
 class SklearnTrainer:
     """Trainer for sklearn models with W&B logging."""
     
