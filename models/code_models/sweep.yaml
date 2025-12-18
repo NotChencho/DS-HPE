@@ -1,0 +1,52 @@
+method: bayes
+
+project: Test
+entity: iqbalch-universidad-carlos-iii-de-madrid
+
+metric:
+  name: val_loss
+  goal: minimize
+
+early_terminate:
+  type: hyperband
+  min_iter: 5
+
+parameters:
+
+  model_type:
+    values: ["DeepMLP", "AttentionMLP"]
+
+  hidden_dim:
+    distribution: int_uniform
+    min: 64
+    max: 512
+
+  num_heads:
+    distribution: int_uniform
+    min: 2
+    max: 4
+
+  dropout:
+    min: 0.1
+    max: 0.5
+
+  lr:
+    min: 0.00001
+    max: 0.005
+
+  weight_decay:
+    min: 0.000001
+    max: 0.001
+
+  batch_size:
+    values: [256, 512]
+
+  epochs:
+    value: 150
+
+command:
+  - ${env}
+  - python
+  - train_sweep.py
+  - --config
+  - ${args_json}
