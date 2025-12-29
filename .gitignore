@@ -231,3 +231,6 @@ catboost_sweep_1.yaml
 
 # Ignore Julia's notebook
 datasetcreation.ipynb
+
+# Ignore initial notebooks
+results_analysis.ipynb
