@@ -225,6 +225,8 @@ Sweep instructions from conda.txt
 sweep.yaml
 sweep_2.yaml
 catboost_sweep_1.yaml
+train_catboost_sweep.py
+evaluate_model_catboost.ipynb
 
 # Ignore csv
 *.csv
