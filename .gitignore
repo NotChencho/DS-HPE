@@ -218,6 +218,7 @@ training.ipynb
 # Ignore prepared datasets
 data/
 wandb/
+catboost_info/
 
 # Personal files
 Sweep instructions from conda.txt
@@ -225,5 +226,8 @@ sweep.yaml
 sweep_2.yaml
 catboost_sweep_1.yaml
 
-# Ignore cdv
+# Ignore csv
 *.csv
+
+# Ignore Julia's notebook
+datasetcreation.ipynb
