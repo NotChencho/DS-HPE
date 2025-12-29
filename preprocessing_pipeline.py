@@ -139,13 +139,13 @@ def pipeline_features(df, linear= True, include_cpu=False, include_mem=False, gr
   cols_to_drop_alloc = ['num_nodes_alloc', 'num_cores_alloc', 'shared', 'num_gpus_alloc',
                 'mem_alloc','cores_alloc_layout', 'cores_allocated']
   cols_to_drop_job= ['job_id','job_state', 'state_reason']
-  cols_to_drop_others = ['req_switch', 'priority', 'derived_ec']
+  cols_to_drop_scheduler = ['req_switch', 'priority', 'derived_ec']
 
   cols_to_drop = (
       cols_to_drop_times
       + cols_to_drop_alloc
       + cols_to_drop_job
-      + cols_to_drop_others
+      + cols_to_drop_scheduler
   )
 
   df = df.drop(columns=cols_to_drop, errors="ignore")
@@ -196,7 +196,7 @@ if __name__ == "__main__":
     df = pd.read_parquet("job_table.parquet")
     df_final= pipeline_features(df, linear= True, include_cpu=False, include_mem=False, group_option=2, num_tasks_option=1)
     
-        # TEST AREA 
+    # TEST AREA 
     print("Number of rows:", len(df_final))
     print("Number of columns:", len(df_final.columns))
     print("\nColumn names:", df_final.columns.tolist())
