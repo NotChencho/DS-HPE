@@ -121,10 +121,7 @@ class RegressionMLP(BaseNeuralNetwork):
     def forward(self, x):
         return self.network(x)
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 class DenseNN(nn.Module):
     """
     Dense Neural Network with configurable hidden layers
@@ -134,11 +131,7 @@ class DenseNN(nn.Module):
         Args:
             input_dim: Number of input features
             hidden_dims: List of hidden layer sizes
-<<<<<<< Updated upstream
-            output_dim: Number of output targets (3 for node, mem, cpu)
-=======
             output_dim: Number of output targets (3 for mean, min, max power)
->>>>>>> Stashed changes
             dropout: Dropout probability
         """
         super(DenseNN, self).__init__()
@@ -162,8 +155,4 @@ class DenseNN(nn.Module):
         self.network = nn.Sequential(*layers)
     
     def forward(self, x):
-<<<<<<< Updated upstream
         return self.network(x)
-=======
-        return self.network(x)
->>>>>>> Stashed changes

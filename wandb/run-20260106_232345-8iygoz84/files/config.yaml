@@ -1,0 +1,71 @@
+_wandb:
+    value:
+        cli_version: 0.23.0
+        e:
+            t47q5k9npenw0m7kqeo9a1hxligkzs92:
+                codePath: models\code_models\train_densenn_sweep.py
+                codePathLocal: models\code_models\train_densenn_sweep.py
+                cpu_count: 16
+                cpu_count_logical: 16
+                cudaVersion: "12.9"
+                disk:
+                    /:
+                        total: "988897341440"
+                        used: "452820508672"
+                email: 100451397@alumnos.uc3m.es
+                executable: C:\Users\Jaime\miniconda3\python.exe
+                gpu: NVIDIA GeForce RTX 5060 Laptop GPU
+                gpu_count: 1
+                gpu_nvidia:
+                    - architecture: Blackwell
+                      cudaCores: 3328
+                      memoryTotal: "8546942976"
+                      name: NVIDIA GeForce RTX 5060 Laptop GPU
+                      uuid: GPU-bf1784b3-28c2-3ce3-6d35-c13096256abd
+                host: DESKTOP-9G0MLGE
+                memory:
+                    total: "33713815552"
+                os: Windows-11-10.0.26100-SP0
+                program: C:\Users\Jaime\Documents\GitHub\DS-HPE\models\code_models\train_densenn_sweep.py
+                python: CPython 3.13.9
+                root: C:\Users\Jaime\Documents\GitHub\DS-HPE
+                startedAt: "2026-01-06T22:23:45.248516Z"
+                writerId: t47q5k9npenw0m7kqeo9a1hxligkzs92
+        m: []
+        python_version: 3.13.9
+        t:
+            "1":
+                - 1
+                - 5
+                - 53
+            "2":
+                - 1
+                - 5
+                - 53
+            "3":
+                - 2
+                - 14
+            "4": 3.13.9
+            "5": 0.23.0
+            "8":
+                - 3
+            "12": 0.23.0
+            "13": windows-amd64
+batch_size:
+    value: 512
+dropout:
+    value: 0.1853377966624332
+epochs:
+    value: 150
+hidden_dims:
+    value:
+        - 512
+        - 256
+        - 128
+        - 64
+lr:
+    value: 0.0007014100798742037
+patience:
+    value: 80
+weight_decay:
+    value: 6.712048171957736e-05

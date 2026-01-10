@@ -1,0 +1,36 @@
+{
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "CPython 3.13.9",
+  "startedAt": "2026-01-07T00:08:43.213022Z",
+  "program": "c:\\Users\\Jaime\\Documents\\GitHub\\DS-HPE\\models\\code_models\\train_densenn_sweep.py",
+  "codePath": "models\\code_models\\train_densenn_sweep.py",
+  "codePathLocal": "models\\code_models\\train_densenn_sweep.py",
+  "email": "100451397@alumnos.uc3m.es",
+  "root": "C:\\Users\\Jaime\\Documents\\GitHub\\DS-HPE",
+  "host": "DESKTOP-9G0MLGE",
+  "executable": "C:\\Users\\Jaime\\miniconda3\\python.exe",
+  "cpu_count": 16,
+  "cpu_count_logical": 16,
+  "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "988897341440",
+      "used": "453150994432"
+    }
+  },
+  "memory": {
+    "total": "33713815552"
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+      "memoryTotal": "8546942976",
+      "cudaCores": 3328,
+      "architecture": "Blackwell",
+      "uuid": "GPU-bf1784b3-28c2-3ce3-6d35-c13096256abd"
+    }
+  ],
+  "cudaVersion": "12.9",
+  "writerId": "adt1mzfoecyaaqirfneg3ur394xkqkeg"
+}

@@ -1,0 +1,72 @@
+_wandb:
+    value:
+        cli_version: 0.23.0
+        e:
+            b4794jj5cm3sy4qhcq47hl7ax9aw2pie:
+                codePath: models\code_models\train_densenn_sweep.py
+                codePathLocal: models\code_models\train_densenn_sweep.py
+                cpu_count: 16
+                cpu_count_logical: 16
+                cudaVersion: "12.9"
+                disk:
+                    /:
+                        total: "988897341440"
+                        used: "457952489472"
+                email: 100451397@alumnos.uc3m.es
+                executable: C:\Users\Jaime\miniconda3\python.exe
+                gpu: NVIDIA GeForce RTX 5060 Laptop GPU
+                gpu_count: 1
+                gpu_nvidia:
+                    - architecture: Blackwell
+                      cudaCores: 3328
+                      memoryTotal: "8546942976"
+                      name: NVIDIA GeForce RTX 5060 Laptop GPU
+                      uuid: GPU-bf1784b3-28c2-3ce3-6d35-c13096256abd
+                host: DESKTOP-9G0MLGE
+                memory:
+                    total: "33713815552"
+                os: Windows-11-10.0.26100-SP0
+                program: C:\Users\Jaime\Documents\GitHub\DS-HPE\models\code_models\train_densenn_sweep.py
+                python: CPython 3.13.9
+                root: C:\Users\Jaime\Documents\GitHub\DS-HPE
+                startedAt: "2026-01-06T22:51:48.359876Z"
+                writerId: b4794jj5cm3sy4qhcq47hl7ax9aw2pie
+        m: []
+        python_version: 3.13.9
+        t:
+            "1":
+                - 1
+                - 5
+                - 53
+            "2":
+                - 1
+                - 5
+                - 53
+            "3":
+                - 2
+                - 14
+                - 24
+                - 62
+            "4": 3.13.9
+            "5": 0.23.0
+            "8":
+                - 3
+            "12": 0.23.0
+            "13": windows-amd64
+batch_size:
+    value: 2048
+dropout:
+    value: 0.2270863115766928
+epochs:
+    value: 150
+hidden_dims:
+    value:
+        - 1024
+        - 512
+        - 256
+lr:
+    value: 0.007571278328510381
+patience:
+    value: 80
+weight_decay:
+    value: 2.6161091913633225e-05

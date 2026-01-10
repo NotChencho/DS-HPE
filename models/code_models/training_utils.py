@@ -1,5 +1,4 @@
 """
-<<<<<<< Updated upstream
 Training utilities for HPC power consumption prediction.
 Includes trainers for both sklearn and PyTorch models with W&B integration.
 """
@@ -29,27 +28,11 @@ class SklearnTrainer:
             project_name: W&B project name
             entity: W&B entity (team name)
         """
-=======
-Training utilities for sklearn and PyTorch models with W&B logging.
-"""
-import torch
-import torch.nn as nn
-import numpy as np
-import wandb
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-
-
-class SklearnTrainer:
-    """Trainer for sklearn models with wandb logging."""
-    
-    def __init__(self, model, model_name, project_name, entity=None):
->>>>>>> Stashed changes
         self.model = model
         self.model_name = model_name
         self.project_name = project_name
         self.entity = entity
     
-<<<<<<< Updated upstream
     def train(self, X_train, y_train, X_val, y_val, config: Optional[Dict] = None):
         """
         Train sklearn model and log to W&B.
@@ -66,13 +49,6 @@ class SklearnTrainer:
         """
         # Initialize W&B
         run = wandb.init(
-=======
-    def train(self, X_train, y_train, X_val, y_val, config=None):
-        """Train sklearn model and log metrics to wandb."""
-        
-        # Initialize wandb
-        wandb.init(
->>>>>>> Stashed changes
             project=self.project_name,
             entity=self.entity,
             name=self.model_name,
@@ -80,7 +56,6 @@ class SklearnTrainer:
         )
         
         # Train model
-<<<<<<< Updated upstream
         print(f"Training {self.model_name}...")
         self.model.fit(X_train, y_train)
         
@@ -170,86 +145,20 @@ class PyTorchTrainer:
             Trained model and best metrics
         """
         # Initialize W&B
-        run = wandb.init(
-            project=self.project_name,
-            entity=self.entity,
-            name=self.model_name,
-            config={
-                "epochs": epochs,
-                "lr": lr,
-                "weight_decay": weight_decay,
-                "patience": patience,
-                "device": self.device,
-                **(config or {})
-            }
-        )
-=======
-        self.model.fit(X_train, y_train)
-        
-        # Validate
-        y_val_pred = self.model.predict(X_val)
-        
-        # Calculate metrics
-        mse = mean_squared_error(y_val, y_val_pred)
-        rmse = np.sqrt(mse)
-        mae = mean_absolute_error(y_val, y_val_pred)
-        r2 = r2_score(y_val, y_val_pred)
-        
-        metrics = {
-            'val_mse': mse,
-            'val_rmse': rmse,
-            'val_mae': mae,
-            'val_r2': r2
-        }
-        
-        # Log to wandb
-        wandb.log(metrics)
-        wandb.finish()
-        
-        return self.model, metrics
-
-
-class PyTorchTrainer:
-    """Trainer for PyTorch models with wandb logging and early stopping."""
-    
-    def __init__(self, model, model_name, project_name=None, entity=None):
-        self.model = model
-        self.model_name = model_name
-        self.project_name = project_name
-        self.entity = entity
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.model.to(self.device)
-    
-    def train(self, train_loader, val_loader, epochs=150, lr=0.001, 
-              weight_decay=1e-5, patience=80, config=None):
-        """
-        Train PyTorch model with early stopping.
-        
-        Args:
-            train_loader: DataLoader for training data
-            val_loader: DataLoader for validation data
-            epochs: Maximum number of epochs
-            lr: Learning rate
-            weight_decay: L2 regularization strength
-            patience: Early stopping patience
-            config: Additional config to log to wandb
-        """
-        
-        # Initialize wandb if project_name is provided
         if self.project_name:
-            wandb.init(
+            run = wandb.init(
                 project=self.project_name,
                 entity=self.entity,
                 name=self.model_name,
                 config={
-                    'epochs': epochs,
-                    'lr': lr,
-                    'weight_decay': weight_decay,
-                    'patience': patience,
+                    "epochs": epochs,
+                    "lr": lr,
+                    "weight_decay": weight_decay,
+                    "patience": patience,
+                    "device": self.device,
                     **(config or {})
                 }
             )
->>>>>>> Stashed changes
         
         # Setup training
         criterion = nn.MSELoss()
@@ -274,19 +183,11 @@ class PyTorchTrainer:
             scheduler.step(val_metrics['val_loss'])
             
             # Log metrics
-<<<<<<< Updated upstream
-            wandb.log({
+            epoch_metrics = {
                 "epoch": epoch,
                 "lr": optimizer.param_groups[0]['lr'],
                 **train_metrics,
                 **val_metrics
-            })
-=======
-            epoch_metrics = {
-                **train_metrics,
-                **val_metrics,
-                'epoch': epoch,
-                'lr': optimizer.param_groups[0]['lr']
             }
             
             if wandb.run:
@@ -298,21 +199,20 @@ class PyTorchTrainer:
                       f"Train Loss: {train_metrics['train_loss']:.4f}, "
                       f"Val Loss: {val_metrics['val_loss']:.4f}, "
                       f"Val RMSE: {val_metrics['val_rmse']:.4f}")
->>>>>>> Stashed changes
             
             # Early stopping
             if val_metrics['val_loss'] < best_val_loss:
                 best_val_loss = val_metrics['val_loss']
-<<<<<<< Updated upstream
                 patience_counter = 0
                 best_model_state = self.model.state_dict().copy()
                 
                 # Update best metrics in wandb
-                wandb.summary.update({
-                    "best_epoch": epoch,
-                    "best_val_loss": best_val_loss,
-                    "best_val_rmse": np.sqrt(best_val_loss)
-                })
+                if wandb.run:
+                    wandb.summary.update({
+                        "best_epoch": epoch,
+                        "best_val_loss": best_val_loss,
+                        "best_val_rmse": np.sqrt(best_val_loss)
+                    })
             else:
                 patience_counter += 1
                 
@@ -324,32 +224,12 @@ class PyTorchTrainer:
         if best_model_state is not None:
             self.model.load_state_dict(best_model_state)
         
-        wandb.finish()
+        if wandb.run:
+            wandb.finish()
         
         return self.model, {"best_val_loss": best_val_loss}
     
     def _train_epoch(self, train_loader: DataLoader, criterion, optimizer) -> Dict[str, float]:
-=======
-                best_model_state = self.model.state_dict().copy()
-                patience_counter = 0
-            else:
-                patience_counter += 1
-                if patience_counter >= patience:
-                    print(f"\nEarly stopping at epoch {epoch+1}")
-                    break
-        
-        # Restore best model
-        if best_model_state:
-            self.model.load_state_dict(best_model_state)
-        
-        # Final validation metrics
-        final_metrics = self._validate_epoch(val_loader, criterion)
-        final_metrics['best_val_loss'] = best_val_loss
-        
-        return self.model, final_metrics
-    
-    def _train_epoch(self, train_loader, criterion, optimizer):
->>>>>>> Stashed changes
         """Train for one epoch."""
         self.model.train()
         total_loss = 0
@@ -370,19 +250,11 @@ class PyTorchTrainer:
         
         avg_loss = total_loss / num_batches
         return {
-<<<<<<< Updated upstream
             "train_loss": avg_loss,
             "train_rmse": np.sqrt(avg_loss)
         }
     
     def _validate_epoch(self, val_loader: DataLoader, criterion) -> Dict[str, float]:
-=======
-            'train_loss': avg_loss,
-            'train_rmse': np.sqrt(avg_loss)
-        }
-    
-    def _validate_epoch(self, val_loader, criterion):
->>>>>>> Stashed changes
         """Validate for one epoch."""
         self.model.eval()
         total_loss = 0
@@ -425,24 +297,15 @@ class PyTorchTrainer:
         return metrics
     
     def evaluate_test_set(self, test_loader):
-<<<<<<< Updated upstream
-        """Evaluate on test set and log to W&B"""
+        """Evaluate on test set and return metrics"""
         self.model.eval()
         all_preds = []
         all_targets = []
     
-=======
-        """Evaluate model on test set and log to wandb."""
-        self.model.eval()
-        all_preds = []
-        all_targets = []
-        
->>>>>>> Stashed changes
         with torch.no_grad():
             for X_batch, y_batch in test_loader:
                 X_batch = X_batch.to(self.device)
                 y_batch = y_batch.to(self.device)
-<<<<<<< Updated upstream
                 predictions = self.model(X_batch)
                 all_preds.append(predictions.cpu().numpy())
                 all_targets.append(y_batch.cpu().numpy())
@@ -451,54 +314,10 @@ class PyTorchTrainer:
         targets = np.vstack(all_targets)
     
         # Calculate metrics
-        from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-    
-        test_metrics = {}
-        for i, target_name in enumerate(['node', 'mem', 'cpu']):
-            rmse = np.sqrt(mean_squared_error(targets[:, i], preds[:, i]))
-            mae = mean_absolute_error(targets[:, i], preds[:, i])
-            r2 = r2_score(targets[:, i], preds[:, i])
-        
-            test_metrics[f'test/{target_name}_rmse'] = rmse
-            test_metrics[f'test/{target_name}_mae'] = mae
-            test_metrics[f'test/{target_name}_r2'] = r2
-
-        # Average metrics
-        test_metrics['test/rmse_mean'] = np.mean([test_metrics[f'test/{t}_rmse'] for t in ['node', 'mem', 'cpu']])
-        test_metrics['test/mae_mean'] = np.mean([test_metrics[f'test/{t}_mae'] for t in ['node', 'mem', 'cpu']])
-        test_metrics['test/r2_mean'] = np.mean([test_metrics[f'test/{t}_r2'] for t in ['node', 'mem', 'cpu']])
-    
-        # Log to W&B
-        wandb.log(test_metrics)
-
-        print("\n" + "="*50)
-        print("TEST SET EVALUATION")
-        print("="*50)
-        for key, value in test_metrics.items():
-            print(f"{key}: {value:.4f}")
-        print("="*50)
-        
-        return test_metrics
-    
-    
-
-
-def evaluate_model(model, X_test, y_test, model_type: str = "sklearn") -> Dict[str, float]:
-=======
-                
-                outputs = self.model(X_batch)
-                
-                all_preds.append(outputs.cpu().numpy())
-                all_targets.append(y_batch.cpu().numpy())
-        
-        all_preds = np.vstack(all_preds)
-        all_targets = np.vstack(all_targets)
-        
-        # Calculate overall metrics
-        mse = mean_squared_error(all_targets, all_preds)
+        mse = mean_squared_error(targets, preds)
         rmse = np.sqrt(mse)
-        mae = mean_absolute_error(all_targets, all_preds)
-        r2 = r2_score(all_targets, all_preds)
+        mae = mean_absolute_error(targets, preds)
+        r2 = r2_score(targets, preds)
         
         test_metrics = {
             'mse': mse,
@@ -508,62 +327,31 @@ def evaluate_model(model, X_test, y_test, model_type: str = "sklearn") -> Dict[s
         }
         
         # Per-output metrics
-        target_names = ['node', 'mem', 'cpu']
         mse_per_output = []
         rmse_per_output = []
         mae_per_output = []
         r2_per_output = []
         
-        for i, name in enumerate(target_names):
-            mse_i = mean_squared_error(all_targets[:, i], all_preds[:, i])
+        for i in range(targets.shape[1]):
+            mse_i = mean_squared_error(targets[:, i], preds[:, i])
             rmse_i = np.sqrt(mse_i)
-            mae_i = mean_absolute_error(all_targets[:, i], all_preds[:, i])
-            r2_i = r2_score(all_targets[:, i], all_preds[:, i])
+            mae_i = mean_absolute_error(targets[:, i], preds[:, i])
+            r2_i = r2_score(targets[:, i], preds[:, i])
             
             mse_per_output.append(mse_i)
             rmse_per_output.append(rmse_i)
             mae_per_output.append(mae_i)
             r2_per_output.append(r2_i)
-            
-            test_metrics[f'test/{name}_mse'] = mse_i
-            test_metrics[f'test/{name}_rmse'] = rmse_i
-            test_metrics[f'test/{name}_mae'] = mae_i
-            test_metrics[f'test/{name}_r2'] = r2_i
         
         test_metrics['mse_per_output'] = mse_per_output
         test_metrics['rmse_per_output'] = rmse_per_output
         test_metrics['mae_per_output'] = mae_per_output
         test_metrics['r2_per_output'] = r2_per_output
         
-        # Calculate means
-        test_metrics['test/rmse_mean'] = np.mean(rmse_per_output)
-        test_metrics['test/mae_mean'] = np.mean(mae_per_output)
-        test_metrics['test/r2_mean'] = np.mean(r2_per_output)
-        
-        # Log to W&B
-        if wandb.run:
-            wandb.log(test_metrics)
-        
-        print("\n" + "="*50)
-        print("TEST SET EVALUATION")
-        print("="*50)
-        print(f"\nOverall Metrics:")
-        print(f"  RMSE: {rmse:.4f}")
-        print(f"  MAE:  {mae:.4f}")
-        print(f"  R²:   {r2:.4f}")
-        
-        print(f"\nPer-Output Metrics:")
-        for i, name in enumerate(target_names):
-            print(f"\n  {name}:")
-            print(f"    RMSE: {rmse_per_output[i]:.4f}")
-            print(f"    MAE:  {mae_per_output[i]:.4f}")
-            print(f"    R²:   {r2_per_output[i]:.4f}")
-        
-        return test_metrics, all_preds
+        return test_metrics, preds
 
 
-def evaluate_model(model, X_test, y_test, model_type="sklearn"):
->>>>>>> Stashed changes
+def evaluate_model(model, X_test, y_test, model_type: str = "sklearn") -> Dict[str, float]:
     """
     Evaluate model on test set.
     
@@ -571,11 +359,10 @@ def evaluate_model(model, X_test, y_test, model_type="sklearn"):
         model: Trained model (sklearn or PyTorch)
         X_test: Test features
         y_test: Test targets
-<<<<<<< Updated upstream
         model_type: "sklearn" or "pytorch"
     
     Returns:
-        Dictionary of test metrics
+        Dictionary of test metrics and predictions
     """
     if model_type == "sklearn":
         y_pred = model.predict(X_test)
@@ -607,34 +394,3 @@ def evaluate_model(model, X_test, y_test, model_type="sklearn"):
     metrics["test_mape_mean"] = np.mean([metrics[f"test_mape_{name}"] for name in target_names])
     
     return metrics, y_pred
-=======
-        model_type: 'sklearn' or 'pytorch'
-    
-    Returns:
-        metrics: Dictionary of test metrics
-        predictions: Model predictions
-    """
-    if model_type == "sklearn":
-        y_pred = model.predict(X_test)
-    else:  # pytorch
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        model.eval()
-        with torch.no_grad():
-            X_tensor = torch.tensor(X_test, dtype=torch.float32).to(device)
-            y_pred = model(X_tensor).cpu().numpy()
-    
-    # Calculate metrics
-    mse = mean_squared_error(y_test, y_pred)
-    rmse = np.sqrt(mse)
-    mae = mean_absolute_error(y_test, y_pred)
-    r2 = r2_score(y_test, y_pred)
-    
-    metrics = {
-        'test_mse': mse,
-        'test_rmse': rmse,
-        'test_mae': mae,
-        'test_r2': r2
-    }
-    
-    return metrics, y_pred
->>>>>>> Stashed changes

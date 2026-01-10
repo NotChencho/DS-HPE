@@ -1,0 +1,1 @@
+{"test_loss":33409.33168658088,"_wandb":{"runtime":8},"_step":0,"final_test_mae":129.7277441585765,"test_rmse":182.67702304615693,"total_batches":34,"final_test_rmse":182.67702304615693,"test_mse":33409.33168658088,"final_test_loss":33409.33168658088,"_runtime":8,"_timestamp":1.7676375720487585e+09,"final_test_mse":33409.33168658088,"test_mae":129.7277441585765}
